@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     bool isWin = false;
     string motMystere = "";
     string motConverti = "";
-    bool isDevOn = true;
+    bool isDevOn = false;
 
     private IHMController ihm; //Objet ihm pour gérer les "vues"
 
@@ -42,6 +42,9 @@ public class GameController : MonoBehaviour
 
         //Initialisation et réinitialisation de l'affichage illustrative du pendu
         ihm.ResetSpritePendu();
+
+        //Initialisation et réinitialisation de l'affichage d'infos dev
+        ihm.debugInfo.gameObject.SetActive(false);
 
         //Réinitialisation des boutons alphabet
         ResetButtonState?.Invoke();

@@ -7,7 +7,7 @@ using TMPro;
 public class IHMController : MonoBehaviour
 {
     [SerializeField] private TMP_Text motConvertiText;
-    [SerializeField] private TMP_Text debugInfo;
+    public TMP_Text debugInfo;
     [SerializeField] private TMP_Text msgActionText;
     [SerializeField] private GameObject msgErreurPanneau;
     [SerializeField] private TMP_Text msgErreurText;
@@ -20,7 +20,7 @@ public class IHMController : MonoBehaviour
     private GameObject croixImage;
     private GameController game; //Objet game pour gérer le traitement
 
-    private bool debugOn = true;
+    private bool debugOn = false;
     [HideInInspector] public int currentSprite;
 
     //Use for initialization -------------------------------------------------
