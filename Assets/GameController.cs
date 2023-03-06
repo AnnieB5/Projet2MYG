@@ -13,6 +13,11 @@ public class GameController : MonoBehaviour
     string motConverti = "";
     bool isDevOn = false;
 
+    //---------------------------A VOIR---------------------------------------
+    [SerializeField] private AudioSource reponseAudio;
+    [SerializeField] private AudioClip bonneReponse;
+    [SerializeField] private AudioClip mauvaiseReponse;
+    //------------------------------------------------------------------------
     private IHMController ihm; //Objet ihm pour gérer les "vues"
 
     public delegate void ResetGame();
