@@ -18,8 +18,9 @@ public class IHMController : MonoBehaviour
     private Button letterButtonSelected;
     private GameObject rondImage;
     private GameObject croixImage;
+    [SerializeField] private AudioSource succesAudio;
+    [SerializeField] private AudioSource echecAudio;
     private GameController game; //Objet game pour gérer le traitement
-
     private bool debugOn = false;
     [HideInInspector] public int currentSprite;
 
@@ -119,6 +120,18 @@ public class IHMController : MonoBehaviour
     {
         croixImage = letterGOSelected.transform.Find("CroixImage").gameObject;
         croixImage.SetActive(true);
+    }
+
+    //joue le son "YouWin" suite au succès de la partie jouée
+    public void PlaySuccesAudio()
+    {
+        succesAudio.Play();
+    }
+
+    //joue le son "GameOver" suite à l'échec de la partie jouée
+    public void PlayEchecAudio()
+    {
+        echecAudio.Play();
     }
 
 

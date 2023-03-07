@@ -13,12 +13,9 @@ public class GameController : MonoBehaviour
     string motConverti = "";
     bool isDevOn = false;
 
-    //---------------------------A VOIR---------------------------------------
-    [SerializeField] private AudioSource reponseAudio;
-    [SerializeField] private AudioClip bonneReponse;
-    [SerializeField] private AudioClip mauvaiseReponse;
-    //------------------------------------------------------------------------
+   
     private IHMController ihm; //Objet ihm pour gérer les "vues"
+    private BoutonAudio boutonAudioClass;
 
     public delegate void ResetGame();
     public static event ResetGame ResetButtonState;
@@ -29,6 +26,7 @@ public class GameController : MonoBehaviour
     {
         //ajout pour Unity GAME
         ihm = GetComponent<IHMController>();
+        boutonAudioClass = GetComponent<BoutonAudio>();
 
         Restart();
     }
@@ -93,6 +91,9 @@ public class GameController : MonoBehaviour
 
             if (contientRtatRecherche == true)
             {
+                //joue le son "BonneReponse" du bouton car la lettre choisie est dans le mot à deviner
+                boutonAudioClass.PlayBonneReponse();
+
                 //affiche le calque "RondImage" du bouton car la lettre choisie est dans le mot à deviner
                 ihm.ShowRondImage();
 
@@ -108,6 +109,9 @@ public class GameController : MonoBehaviour
 
             else
             {
+                //joue le son "MauvaiseReponse" du bouton car la lettre choisie n'est pas dans le mot à deviner
+                boutonAudioClass.PlayMauvaiseReponse();
+
                 //affiche le calque "CroixImage" du bouton car la lettre choisie n'est pas dans le mot à deviner
                 ihm.ShowCroixImage();
 
@@ -124,6 +128,7 @@ public class GameController : MonoBehaviour
             if (!motConverti.Contains(underscoreMot)) //cas où tout le mot mystère a été deviné, WIN
             {
                 ihm.ShowInfoMessage("Félicitations, vous avez gagné !");
+                ihm.PlaySuccesAudio();
                 isWin = true;
                 ihm.ShowActionMessage("Voulez-vous rejouer, ou quitter ? Cliquez sur le bouton de votre choix.");
             }
@@ -136,6 +141,7 @@ public class GameController : MonoBehaviour
                 if (nbreEssais == 0) //cas où le joueur a épuisé tous ses essais sans deviner le mot, GAME OVER
                 {
                     ihm.ShowInfoMessage("Dommage, vous avez perdu !");
+                    ihm.PlayEchecAudio();
                     ihm.ShowActionMessage("Voulez-vous rejouer, ou quitter ? Cliquez sur le bouton de votre choix.");
                 }
 
@@ -150,8 +156,11 @@ public class GameController : MonoBehaviour
 
         else
         {
-            ihm.ShowInfoDev(true, "sortie de la boucle des tours de cette partie de jeu"); //debug
-
+            if (isDevOn == true)
+            {
+                ihm.ShowInfoDev(true, "sortie de la boucle des tours de cette partie de jeu"); //debug
+            }
+            
             //demande à l'utilisateur s'il veut quitter
             ihm.ShowActionMessage("Voulez-vous rejouer, ou quitter ? Cliquez sur le bouton de votre choix.");
         }
